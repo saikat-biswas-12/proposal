@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Only For You ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    height:100vh;
+    background:linear-gradient(to top,#020111,#191621);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Georgia,serif;
+    overflow:hidden;
+    color:white;
+    transition:background 6s ease;
+}
+
+body.sunrise{
+    background:linear-gradient(to top,#ff512f,#f09819,#ffe259);
+}
+
+.hidden{display:none;}
+
+.container{
+    text-align:center;
+    max-width:90%;
+}
+
+/* Password screen */
+#lock{
+    position:absolute;
+    inset:0;
+    background:#000;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+input{
+    padding:10px 15px;
+    font-size:1.1em;
+    border-radius:10px;
+    border:none;
+    margin-top:10px;
+}
+
+/* Typing */
+.typing{
+    font-size:1.3em;
+    white-space:nowrap;
+    overflow:hidden;
+    border-right:3px solid white;
+    width:0;
+    animation:typing 6s steps(70,end) forwards, blink .8s infinite;
+}
+@keyframes typing{to{width:100%;}}
+@keyframes blink{50%{border-color:transparent;}}
+
+/* Image reveal */
+.photo{
+    margin:25px auto;
+    width:200px;
+    border-radius:20px;
+    filter:blur(15px);
+    transition:filter 2s ease;
+}
+.photo.show{filter:blur(0);}
+
+/* Proposal */
+.proposal{
+    font-size:2em;
+    margin-top:20px;
+}
+
+/* Buttons */
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:1em;
+    margin:10px;
+}
+.yes{background:#ff6b9d;color:white;}
+.no{background:#eee;}
+
+/* Hearts & flowers */
+.heart,.petal{
+    position:absolute;
+    animation:float 5s linear infinite;
+}
+@keyframes float{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-400px);opacity:0;}
+}
+
+/* WhatsApp */
+.share{
+    margin-top:20px;
+    color:#25D366;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 PASSWORD -->
+<div id="lock">
+    <h2>Enter the secret 💌</h2>
+    <input id="pass" type="password" placeholder="password">
+    <button onclick="unlock()">Unlock</button>
+</div>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgm" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container hidden" id="main">
+    <h1>Hey <span id="name"></span> 💫</h1>
+
+    <p id="l1" class="typing">
+        Some feelings deserve a little magic…
+    </p>
+
+    <p id="l2" class="typing hidden">
+        And you are the magic in my life 💙
+    </p>
+
+    <!-- 💌 PHOTO -->
+    <img src="her.jpg" class="photo hidden" id="photo">
+
+    <div id="final" class="proposal hidden">
+        Will you be mine? 💖<br>
+        <button class="yes" onclick="yes()">Yes 🥹</button>
+        <button class="no" onclick="no()">No 🙈</button>
+
+        <!-- 💬 WhatsApp -->
+        <div class="share" onclick="share()">
+            💬 Share this moment
+        </div>
+    </div>
+</div>
+
+<script>
+// 🔧 CHANGE THESE
+const herName="SOUMI";
+const password="iloveyou";
+
+document.getElementById("name").innerText=herName;
+
+// Password unlock
+function unlock(){
+    if(document.getElementById("pass").value===password){
+        document.getElementById("lock").style.display="none";
+        document.getElementById("main").classList.remove("hidden");
+        document.documentElement.requestFullscreen();
+        document.getElementById("bgm").play();
+        start();
+    }else alert("Wrong password 😢");
+}
+
+function start(){
+    setTimeout(()=>l2.classList.remove("hidden"),6500);
+    setTimeout(()=>{
+        photo.classList.remove("hidden");
+        photo.classList.add("show");
+        document.body.classList.add("sunrise");
+    },13000);
+    setTimeout(()=>final.classList.remove("hidden"),17000);
+}
+
+// Floating hearts + petals
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="❤️";
+    h.style.left=Math.random()*100+"%";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+},800);
+
+setInterval(()=>{
+    const p=document.createElement("div");
+    p.className="petal";
+    p.innerText="🌸";
+    p.style.left=Math.random()*100+"%";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),5000);
+},1200);
+
+// Buttons
+function yes(){
+    document.body.innerHTML="<h1>You made me the happiest 🥹💖</h1>";
+}
+function no(){
+    alert("Please think again 😭💔");
+}
+
+// WhatsApp share
+function share(){
+    const msg=`Someone made something special for you 💖`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+}
+</script>
+
+</body>
+</html>
